@@ -22,7 +22,7 @@ class Authen extends Component {
     promise.then(user => {
       var lout = document.getElementById("logout");
       console.log(user);
-      let err = "Welcome " + user.user.email;
+      let err = `Welcome ${user.email}`;
       this.setState({ err: err });
       lout.classList.remove("hide");
     });
@@ -39,14 +39,14 @@ class Authen extends Component {
     const promise = auth.createUserWithEmailAndPassword(email, password);
     promise
       .then(user => {
-        let err = `Welcome ${user.user.email}`;
+        let err = `Welcome ${user.email}`;
         console.log(user);
-        console.log(user.user.uid);
+        console.log(user.uid);
         firebase
           .database()
-          .ref("/users" + user.user.uid)
+          .ref("/users" + user.uid)
           .set({
-            email: user.user.email
+            email: user.email
           });
         console.log(user);
         this.setState({ err: err });
@@ -58,6 +58,12 @@ class Authen extends Component {
       });
   }
 
+  logout() {
+    firebase.auth().signOut();
+    var lout = document.getElementById("logout");
+    lout.classList.add("hide");
+  }
+
   constructor(props) {
     super(props);
 
@@ -67,6 +73,7 @@ class Authen extends Component {
 
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   render() {
