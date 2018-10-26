@@ -15,23 +15,22 @@ class Authen extends Component {
   login(event) {
     const email = this.refs.email.value;
     const password = this.refs.password.value;
+    console.log(email, password);
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(email, password);
 
-    promise
-      .then(user => {
-        console.log(user);
-        let lout = document.getElementById("logout");
-        let message = `Welcome ${user.user.email}`;
-        this.setState({ err: message });
-
-        lout.classList.remove("hide");
-      })
-      .catch(e => {
-        let err = e.message;
-        console.log(err);
-        this.setState({ err: err });
-      });
+    promise.then(user => {
+      var lout = document.getElementById("logout");
+      console.log(user);
+      let err = "Welcome " + user.user.email;
+      this.setState({ err: err });
+      lout.classList.remove("hide");
+    });
+    promise.catch(e => {
+      var err = e.message;
+      console.log(err);
+      this.setState({ err: err });
+    });
   }
   signup() {
     const email = this.refs.email.value;
@@ -90,7 +89,9 @@ class Authen extends Component {
         <p>{this.state.err}</p>
         <button onClick={this.login}>Log In</button>
         <button onClick={this.signup}>Sign Up</button>
-        <button>Log Out</button>
+        <button onClick={this.logout} id="logout" className="hide">
+          Log Out
+        </button>
       </div>
     );
   }
