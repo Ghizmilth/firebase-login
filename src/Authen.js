@@ -15,20 +15,20 @@ class Authen extends Component {
   login(event) {
     const email = this.refs.email.value;
     const password = this.refs.password.value;
-    console.log(email, password);
+
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(email, password);
 
     promise.then(user => {
       var lout = document.getElementById("logout");
-      console.log(user);
+
       let err = `Welcome ${user.email}`;
       this.setState({ err: err });
       lout.classList.remove("hide");
     });
     promise.catch(e => {
       var err = e.message;
-      console.log(err);
+
       this.setState({ err: err });
     });
   }
@@ -40,15 +40,12 @@ class Authen extends Component {
     promise
       .then(user => {
         let err = `Welcome ${user.email}`;
-        console.log(user);
-        console.log(user.uid);
         firebase
           .database()
           .ref("/users" + user.uid)
           .set({
             email: user.email
           });
-        console.log(user);
         this.setState({ err: err });
       })
       .catch(e => {
