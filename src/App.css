@@ -87,3 +87,12 @@ p {
 .hide {
   display: none;
 }
+
+.google {
+  font-size: 30px;
+  background-color: #e87a7a;
+  color: #fff;
+  padding: 10px 30px;
+  margin-top: 20px;
+  margin-right: 10px;
+}
